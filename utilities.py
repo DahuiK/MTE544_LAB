@@ -24,7 +24,12 @@ class Logger:
             vals_str=""
 
             # TODO Part 5: Write the values from the list to the file
-            ...
+            for val in values_list: # point of this is to remove the square brackets from laser ranges in msg
+                if isinstance(val, (list, tuple)):
+                    clean_array = str(val).replace('[', '').replace(']', '')
+                    vals_str += f"{clean_array}, "
+                else:
+                    vals_str += f"{val}, "
             
             vals_str+="\n"
             
@@ -85,7 +90,13 @@ def euler_from_quaternion(quat):
     Convert quaternion (w in last place) to euler roll, pitch, yaw.
     quat = [x, y, z, w]
     """
-    ... # just unpack yaw
+    x, y, z, w = quat
+
+    # only getting yaw
+    siny_cosp = 2 * (w * z + x * y)
+    cosy_cosp = 1 - 2 * (y * y + z * z)
+    yaw = atan2(siny_cosp, cosy_cosp)
+
     return yaw
 
 
